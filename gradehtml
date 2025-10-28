@@ -1,0 +1,252 @@
+<style>
+  #htc * { box-sizing: border-box; }
+  #htc {
+    background: #f9fcff;
+    padding: 16px;
+    border-radius: 10px;
+    max-width: 720px;
+    width: 100%;
+    margin: 16px auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+  }
+  #htc h2 {
+    color: #1e363a;
+    text-align: center;
+    font-size: 1.6rem;
+    margin: 0 0 16px;
+  }
+  #htc label { display: block; margin-bottom: 6px; font-weight: 600; }
+  #htc input[type="text"], #htc input[type="number"], #htc input[type="email"], #htc select {
+    width: 100%; padding: 10px; border: 1px solid #ccc;
+    border-radius: 8px; font-size: 1rem; color: #1e363a;
+    font-weight: 500; background: #fff;
+  }
+  #htc .form-group { margin-bottom: 12px; }
+
+  /* Grade Selector */
+  #htc .grade-container {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 8px;
+  }
+  #htc .grade-container img {
+    width: 65px; border-radius: 8px; cursor: pointer;
+    border: 2px solid transparent; transition: transform .2s, border-color .3s;
+  }
+  #htc .grade-container img:hover { transform: scale(1.1); }
+  #htc .grade-container img.active {
+    border-color: #ff8800;
+    box-shadow: 0 0 10px rgba(255,136,0,0.6);
+  }
+
+  /* Button */
+  #htc #calculateBtn {
+    background: linear-gradient(135deg,#1e363a,#ff8800);
+    color: white; padding: 12px; border: none;
+    border-radius: 8px; font-size: 16px; font-weight: bold;
+    cursor: pointer; animation: glowPulse 2s infinite ease-in-out; width: 100%;
+  }
+  @keyframes glowPulse {
+    0% { box-shadow: 0 0 0 0 rgba(255,136,0,0.6); }
+    70% { box-shadow: 0 0 15px 8px rgba(255,136,0,0.2); }
+    100% { box-shadow: 0 0 0 0 rgba(255,136,0,0); }
+  }
+  #htc #calculateBtn:hover {
+    background: linear-gradient(135deg,#ff8800,#1e363a);
+  }
+
+  /* Result */
+  #htc #result { margin-top: 20px; display: none; }
+  #htc .info-box, #htc .procedure-box {
+    background: #fff; border: 1px solid #ccc;
+    padding: 14px; border-radius: 8px; margin-top: 12px;
+    font-size: .95rem;
+  }
+  #htc .highlight-value {
+    background: linear-gradient(90deg,#ffe082,#ffd54f);
+    padding: 4px 8px; border-radius: 6px; font-weight: bold;
+    animation: marketPulse 2s infinite; display: inline-block;
+  }
+  @keyframes marketPulse {
+    0% { box-shadow: 0 0 5px #ffd54f; }
+    50% { box-shadow: 0 0 15px #ffca28; }
+    100% { box-shadow: 0 0 5px #ffd54f; }
+  }
+  #htc #images { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  #htc #images img { width: 100%; max-width: 300px; border-radius: 10px; }
+
+  #htc .cta-link {
+    background: #2b4a4f; color: #fff; padding: 12px 24px;
+    border-radius: 8px; text-decoration: none; font-weight: bold;
+    display: inline-block; margin-top: 20px;
+    transition: all .3s ease;
+  }
+  #htc .cta-link:hover { background: #ff8800; color: #1e1e1e; transform: translateY(-2px); }
+  #htc .contact-link { text-align: center; display: block; margin-top: 25px; font-size: 16px; font-weight: bold; color: #1e363a; }
+
+  @media (max-width: 600px) {
+    #htc { width: 98%; padding: 16px; }
+  }
+</style>
+
+<div id="htc">
+  <h2>Hair Transplant Cost Calculator – India</h2>
+  
+  <div class="form-group">
+    <label>Your Name (optional):</label>
+    <input type="text" id="username" placeholder="Enter your name">
+  </div>
+
+  <div class="form-group">
+    <label>Enter City:</label>
+    <input type="text" id="city" placeholder="e.g. Pune" list="cityList">
+    <datalist id="cityList">
+      <option value="Pune"><option value="Mumbai"><option value="Delhi">
+      <option value="Hyderabad"><option value="Ahmedabad">
+      <option value="Bangalore"><option value="Indore"><option value="Nagpur"><option value="Lucknow">
+    </datalist>
+  </div>
+
+  <div class="form-group">
+    <label>Phone Number (Mandatory):</label>
+    <input type="text" id="phone" placeholder="Enter your phone number" maxlength="10" pattern="[0-9]{10}" required>
+  </div>
+
+  <div class="form-group">
+    <label>Email Address (optional):</label>
+    <input type="email" id="email" placeholder="Enter your email">
+  </div>
+
+  <div class="form-group">
+    <label>Select Technique:</label>
+    <select id="technique">
+      <option value="35">Sapphire FUE</option>
+      <option value="30">IMPLANTER FUE</option>
+      <option value="45">BIG-FUE</option>
+      <option value="25">BIO-FUE</option>
+      <option value="70">DHI</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label>Select Your Baldness Grade:</label>
+    <div id="gradeSelector" class="grade-container">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/grade-1.webp" alt="Grade 1" data-grafts="1000">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/grade-2.webp" alt="Grade 2" data-grafts="1500">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/grade-3.webp" alt="Grade 3" data-grafts="2000">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/grade-4.webp" alt="Grade 4" data-grafts="3000">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/grade-5.webp" alt="Grade 5" data-grafts="4000">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/grade-6.webp" alt="Grade 6" data-grafts="5000">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/grade-7.webp" alt="Grade 7" data-grafts="6000">
+    </div>
+  </div>
+
+  <input type="hidden" id="grafts">
+  <button id="calculateBtn" onclick="calculateCost()">Calculate</button>
+
+  <div id="result">
+    <h3 style="color:#FFAC1C;text-align:center;">
+      <span id="greeting"></span> Your Estimated Package: ₹<span id="total"></span>
+    </h3>
+    <div class="info-box">
+      <h4>Details Summary</h4>
+      <p><strong>City:</strong> <span id="cityDisplay"></span></p>
+      <p><strong>Technique:</strong> <span id="techniqueDisplay"></span></p>
+      <p><strong>Baldness Grade:</strong> <span id="gradeDisplay"></span></p>
+      <p><strong>Grafts:</strong> <span id="graftDisplay"></span></p>
+      <p><strong>Market Price Range:</strong> <span class="highlight-value">₹<span id="marketPriceRange"></span></span></p>
+    </div>
+
+    <div class="procedure-box">
+      <h4>Procedure Details</h4>
+      <p><strong>Time:</strong> 3–5 hours</p>
+      <p><strong>Recovery:</strong> 5–7 days</p>
+      <p><strong>Results:</strong> 4–12 months</p>
+    </div>
+
+    <div id="images"></div>
+    <div style="text-align:center;">
+      <a href="https://hairfreehairgrow.com/before-and-after-results/" target="_blank" class="cta-link">See More Results</a>
+    </div>
+  </div>
+
+  <a href="tel:+917272832222" class="contact-link">📞 +91 72728 32222</a>
+</div>
+
+<script>
+  // Grade selection
+  document.querySelectorAll("#gradeSelector img").forEach(img => {
+    img.addEventListener("click", () => {
+      document.querySelectorAll("#gradeSelector img").forEach(i => i.classList.remove("active"));
+      img.classList.add("active");
+      document.getElementById("grafts").value = img.dataset.grafts;
+      document.getElementById("gradeDisplay").innerText = img.alt;
+    });
+  });
+
+  // Calculator
+  function calculateCost() {
+    const name = document.getElementById("username").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const grafts = parseInt(document.getElementById("grafts").value);
+    const rate = parseInt(document.getElementById("technique").value);
+    const techniqueName = document.getElementById("technique").selectedOptions[0].text;
+
+    if (!phone || phone.length < 10) {
+      alert("Please enter a valid phone number.");
+      return;
+    }
+    if (!city) { alert("Please enter your city."); return; }
+    if (!grafts) { alert("Please select your baldness grade."); return; }
+
+    const total = grafts * rate;
+    const minMarket = total - 10000;
+    const maxMarket = total + 40000;
+
+    document.getElementById("greeting").innerText = name ? `Hi ${name},` : "Hi";
+    document.getElementById("total").innerText = total.toLocaleString();
+    document.getElementById("marketPriceRange").innerText = `${minMarket.toLocaleString()} – ${maxMarket.toLocaleString()}`;
+    document.getElementById("techniqueDisplay").innerText = techniqueName;
+    document.getElementById("cityDisplay").innerText = city;
+    document.getElementById("graftDisplay").innerText = grafts.toLocaleString();
+    document.getElementById("result").style.display = "block";
+
+    // Send lead to CRM
+    const leadData = {
+      name: name || "Anonymous",
+      phone: phone,
+      email: email,
+      city: city,
+      grafts: grafts,
+      technique: techniqueName,
+      total: total,
+      source: "Hair Transplant Calculator"
+    };
+
+    fetch("https://your-crm-endpoint.com/api/leads", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(leadData)
+    }).then(r => console.log("Lead sent:", r.status)).catch(e => console.error(e));
+
+    // Show results images
+    const imagesDiv = document.getElementById("images");
+    imagesDiv.innerHTML = "";
+    let imgs = [];
+    if (grafts >= 1000 && grafts <= 1499) imgs = ["https://hairfreehairgrow.com/wp-content/uploads/2025/03/02.webp"];
+    else if (grafts >= 1500 && grafts <= 2499) imgs = ["https://hairfreehairgrow.com/wp-content/uploads/2025/03/01-2.webp"];
+    else if (grafts >= 2500 && grafts <= 3499) imgs = ["https://hairfreehairgrow.com/wp-content/uploads/2025/03/02-4.webp"];
+    else if (grafts >= 3500 && grafts <= 4499) imgs = ["https://hairfreehairgrow.com/wp-content/uploads/2025/03/02-6.webp"];
+    else if (grafts >= 4500) imgs = ["https://hairfreehairgrow.com/wp-content/uploads/2025/03/01-8.webp"];
+
+    imgs.forEach(url => {
+      const img = document.createElement("img");
+      img.src = url;
+      img.loading = "lazy";
+      imagesDiv.appendChild(img);
+    });
+
+    document.getElementById("result").scrollIntoView({ behavior: "smooth" });
+  }
+</script>
